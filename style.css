@@ -22,6 +22,17 @@ html {
   }
 }
 
+@keyframes desplazamientoHaciaAbajo {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(
+      80px
+    ); /* Puedes ajustar la cantidad de desplazamiento aquí */
+  }
+}
+
 /* HEADER */
 
 header {
@@ -129,6 +140,7 @@ header {
   position: absolute;
   top: 80px;
   left: 0;
+
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   background-color: #ffd0ef;
@@ -138,6 +150,11 @@ header {
   width: 100%;
   height: 150px;
   padding: 10px;
+
+  animation-duration: 1s;
+  animation-name: fade;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
 }
 
 .navbar__list a {
@@ -448,6 +465,7 @@ header {
 .form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
 
@@ -470,23 +488,29 @@ header {
 
 .form input {
   border-radius: 5px;
-  padding: 5px 60px;
+  padding: 5px 20px;
+  width: 350px;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .form input {
-    padding: 5px 150px;
+    padding: 5px 40px;
+    width: 700px;
   }
 }
 
 .form textarea {
   border-radius: 5px;
-  padding: 0px 60px;
+  padding: 5px 20px;
+  width: 350px;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .form textarea {
-    padding: 0px 150px;
+    padding: 5px 40px;
+    width: 700px;
   }
 }
 
@@ -508,6 +532,16 @@ header {
 .form button:hover {
   box-shadow: 0px 0px 8px 2px #aaaaaa;
   font-weight: bold;
+}
+
+.input-error {
+  color: rgb(237, 1, 1);
+  font-size: 12px;
+}
+
+.input-success {
+  border: 3px solid #27ce4e;
+  border-radius: 6px;
 }
 
 .container-footer {
