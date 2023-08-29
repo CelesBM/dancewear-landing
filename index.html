@@ -65,54 +65,21 @@
           to".
         </p>
         <div class="products__container-buttons">
-          <button>Todos los productos</button>
-          <button>Mallas</button>
-          <button>Pollerines</button>
-          <button>Medias</button>
-          <button>Media puntas</button>
-          <button>Puntas</button>
+          <button class="category active">Todos los productos</button>
+          <button class="category" data-category="leotards">Leotards</button>
+          <button class="category" data-category="skirts">Skirts</button>
+          <button class="category" data-category="stocking">Stocking</button>
+          <button class="category" data-category="canvas-shoes">
+            Canvas shoes
+          </button>
+          <button class="category" data-category="pointes-shoes">
+            Pointes Shoes
+          </button>
         </div>
-        <div class="products__container-cards">
-          <!-- EJEMPLO PARA RENDERIZAR -->
-          <div class="container-card">
-            <h5>Malla Lisboa</h5>
-            <img
-              src="https://http2.mlstatic.com/D_NQ_NP_880582-MLA46818550145_072021-W.jpg"
-              alt=""
-            />
-            <div class="container-price">
-              <p>Price:</p>
-              <p>$20.04</p>
-            </div>
-            <button>Add</button>
-          </div>
-          <!-- EJEMPLO PARA RENDERIZAR -->
-          <div class="container-card">
-            <h5>Malla Lisboa</h5>
-            <img
-              src="https://http2.mlstatic.com/D_NQ_NP_880582-MLA46818550145_072021-W.jpg"
-              alt=""
-            />
-            <div class="container-price">
-              <p>Price:</p>
-              <p>$20.04</p>
-            </div>
-            <button>Add</button>
-          </div>
-          <!-- EJEMPLO PARA RENDERIZAR -->
-          <div class="container-card">
-            <h5>Malla Lisboa</h5>
-            <img
-              src="https://http2.mlstatic.com/D_NQ_NP_880582-MLA46818550145_072021-W.jpg"
-              alt=""
-            />
-            <div class="container-price">
-              <p>Price:</p>
-              <p>$20.04</p>
-            </div>
-            <button>Add</button>
-          </div>
-        </div>
+
+        <div class="products__container-cards"></div>
+
+        <button class="more">See more</button>
       </div>
     </section>
 
@@ -202,7 +169,8 @@
         </div>
       </div>
     </footer>
-
+    <script src="/data.js"></script>
+    <script src="/contact.js"></script>
     <script src="/main.js"></script>
   </body>
 </html>
