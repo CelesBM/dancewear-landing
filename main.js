@@ -10,6 +10,8 @@ const buttonsContainerEl = document.querySelector(
   ".products__container-buttons"
 ); //contenedor de los botones de las categorias
 const categoriesList = document.querySelectorAll(".category"); //categoría de producto
+const shopcardEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
+const shopContainerEl = document.querySelector(".shopcart-container"); //container del carrito de compras
 
 //         FUNCIONES AUXILIARES DEL MENU HAMBURGUESA: SHOWMENU, CLOSEONSCROLL Y CLOSENAVBARMOBILE          //
 
@@ -17,6 +19,7 @@ const categoriesList = document.querySelectorAll(".category"); //categoría de p
 
 const showMenu = () => {
   navListEl.classList.toggle("show-navbar");
+  shopContainerEl.classList.remove("show-shop");
 };
 
 //Para que desaparezca el menú desplegado en mobile al scrollear:
@@ -158,12 +161,20 @@ const initProducts = () => {
   buttonSeeMoreEl.addEventListener("click", showMoreProducts);
   buttonsContainerEl.addEventListener("click", filterByCategories);
 };
+/////////////////////////////////////////////////////////////////////////////
+
+const toggleCart = () => {
+  //cuando haga click en el carrito abra el menú del carrito y cierro la navbar
+  navListEl.classList.remove("show-navbar"); //con esto cuando toco el carrito se cierra el navbar
+  shopContainerEl.classList.toggle("show-shop");
+};
 
 const init = () => {
   hamburguerMenu();
   aboutButtonEl.addEventListener("click", hiddenButtonAboutAndShowText);
   initProducts();
   initContact();
+  shopcardEl.addEventListener("click", toggleCart);
 };
 
 init();
