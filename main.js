@@ -1,35 +1,46 @@
 const navListEl = document.querySelector(".navbar__list"); //contiene los links de products, about y contact
 const toggleEl = document.querySelector(".navbar__toggle"); //capturo el menú hamburguesa
 const aboutButtonEl = document.querySelector(".about__button"); //botón "about us"
-const aboutContainerEl = document.querySelector(".about__contenedor"); //contenedor del about us, donde irá el texto
-const productsContainerEl = document.querySelector(
-  ".products__container-cards"
-); //acá es donde voy a renderizar mis productos.
+const aboutContainerEl = document.querySelector(".about__container"); //contenedor del about us, donde irá el texto
+const productsContainerEl = document.querySelector(".container-cards"); //acá es donde voy a renderizar mis productos.
 const buttonSeeMoreEl = document.querySelector(".more"); //botón de see more, en la sección products
-const buttonsContainerEl = document.querySelector(
-  ".products__container-buttons"
-); //contenedor de los botones de las categorias
+const buttonsContainerEl = document.querySelector(".container-buttons"); //contenedor de los botones de las categorias
 const categoriesList = document.querySelectorAll(".category"); //categoría de producto
-const shopcardEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
-const shopContainerEl = document.querySelector(".shopcart-container"); //container del carrito de compras
+const shopEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
+const shopContainerEl = document.querySelector(".shop-container"); //container del carrito de compras
 
-//         FUNCIONES AUXILIARES DEL MENU HAMBURGUESA: SHOWMENU, CLOSEONSCROLL Y CLOSENAVBARMOBILE          //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//LOCALSTORAGE
+
+//Traigo los mensajes del localStorage o creo array vacío si no hay mensajes:
+
+const productsLS = JSON.parse(localStorage.getItem("products")) || [];
+
+//Guardo los mensajes en localStorage:
+
+const saveProductsToLocalStorage = () => {
+  localStorage.setItem("products", JSON.stringify(productsLS));
+};
+
+//         FUNCIONES AUXILIARES DEL MENU HAMBURGUESA: SHOWMENU, CLOSENAVONSCROLL Y CLOSENAVBARMOBILE          //
 
 //Para desplegar la navbar en la versión mobile:
 
 const showMenu = () => {
   navListEl.classList.toggle("show-navbar");
   shopContainerEl.classList.remove("show-shop");
+  if (navListEl.classList.contains("show-navbar")) {
+    shopContainerEl.classList.add("shop-container");
+  }
 };
 
 //Para que desaparezca el menú desplegado en mobile al scrollear:
 
-const closeOnScroll = () => {
-  if (window.scrollY > 50) {
-    navListEl.style.display = "none";
-  } else {
-    navListEl.style.display = "";
+const closeNavOnScroll = () => {
+  if (!navListEl.classList.contains("show-navbar")) {
+    return;
   }
+  navListEl.classList.remove("show-navbar");
 };
 
 //Para que desaparezca la navbar de mobile cuando agrando la pantalla:
@@ -44,7 +55,7 @@ const closeNavbarMobile = () => {
 
 const hamburguerMenu = () => {
   toggleEl.addEventListener("click", showMenu);
-  window.addEventListener("scroll", closeOnScroll);
+  window.addEventListener("scroll", closeNavOnScroll);
   window.addEventListener("resize", closeNavbarMobile);
 };
 
@@ -165,8 +176,22 @@ const initProducts = () => {
 
 const toggleCart = () => {
   //cuando haga click en el carrito abra el menú del carrito y cierro la navbar
-  navListEl.classList.remove("show-navbar"); //con esto cuando toco el carrito se cierra el navbar
+  //shopContainerEl.classList.remove("shopcart-container");
   shopContainerEl.classList.toggle("show-shop");
+  navListEl.classList.remove("show-navbar"); //con esto cuando toco el carrito se cierra el navbar
+  if (shopContainerEl.classList.contains("show-shop")) {
+    shopContainerEl.classList.remove("shop-container");
+  } else {
+    shopContainerEl.classList.add("shop-container");
+  }
+};
+
+const closeShopOnScroll = () => {
+  if (!shopContainerEl.classList.contains("show-shop")) {
+    return;
+  }
+  shopContainerEl.classList.remove("show-shop");
+  shopContainerEl.classList.add("shop-container");
 };
 
 const init = () => {
@@ -174,7 +199,8 @@ const init = () => {
   aboutButtonEl.addEventListener("click", hiddenButtonAboutAndShowText);
   initProducts();
   initContact();
-  shopcardEl.addEventListener("click", toggleCart);
+  shopEl.addEventListener("click", toggleCart);
+  window.addEventListener("scroll", closeShopOnScroll);
 };
 
 init();
