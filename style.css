@@ -231,6 +231,81 @@ header {
   font-weight: bold;
 }
 
+.shopcard-container {
+  display: flex;
+  background-color: #fff9fd;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 12px 1px #aaaaaa;
+  padding: 10px 50px;
+  gap: 40px;
+  align-items: center;
+}
+
+.shopcard-total {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.shopcard-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shopcard-quantity {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 14px;
+}
+.shopcard-container h5 {
+  font-size: 14px;
+}
+
+.shopcard-container img {
+  height: 100px;
+  width: 80px;
+}
+
+.shopcard-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.p-price {
+  font-weight: bold;
+}
+
+.empty-cart {
+  font-size: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.shop-total h5 {
+  font-size: 16px;
+}
+
+.buy {
+  padding: 5px 40px;
+  background-color: #ffe4f6;
+  color: #817a7f;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.buy:hover {
+  box-shadow: 0px 0px 8px 2px #aaaaaa;
+  font-weight: bold;
+}
+
 /* HERO */
 
 #hero {

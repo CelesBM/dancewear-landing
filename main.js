@@ -2,24 +2,25 @@ const navListEl = document.querySelector(".navbar__list"); //contiene los links 
 const toggleEl = document.querySelector(".navbar__toggle"); //capturo el menú hamburguesa
 const aboutButtonEl = document.querySelector(".about__button"); //botón "about us"
 const aboutContainerEl = document.querySelector(".about__container"); //contenedor del about us, donde irá el texto
-const productsContainerEl = document.querySelector(".container-cards"); //acá es donde voy a renderizar mis productos.
+const productsContainerEl = document.querySelector(".container-cards"); //acá es donde voy a renderizar mis productos
 const buttonSeeMoreEl = document.querySelector(".more"); //botón de see more, en la sección products
 const buttonsContainerEl = document.querySelector(".container-buttons"); //contenedor de los botones de las categorias
 const categoriesList = document.querySelectorAll(".category"); //categoría de producto
 const shopEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
 const shopContainerEl = document.querySelector(".shop-container"); //container del carrito de compras
-
+const shopAddEl = document.querySelector(".shop-add"); //contenedor de los productos que agrego al carrito
+const totalEl = document.querySelector(".total"); // acá capturo el total de lo que suma los precios del carrito
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //LOCALSTORAGE
 
 //Traigo los mensajes del localStorage o creo array vacío si no hay mensajes:
 
-const productsLS = JSON.parse(localStorage.getItem("products")) || [];
+const productLS = JSON.parse(localStorage.getItem("products")) || [];
 
 //Guardo los mensajes en localStorage:
 
 const saveProductsToLocalStorage = () => {
-  localStorage.setItem("products", JSON.stringify(productsLS));
+  localStorage.setItem("products", JSON.stringify(productLS));
 };
 
 //         FUNCIONES AUXILIARES DEL MENU HAMBURGUESA: SHOWMENU, CLOSENAVONSCROLL Y CLOSENAVBARMOBILE          //
@@ -186,6 +187,8 @@ const toggleCart = () => {
   }
 };
 
+//Cerrar el carrito de compras al hacer scroll:
+
 const closeShopOnScroll = () => {
   if (!shopContainerEl.classList.contains("show-shop")) {
     return;
@@ -194,6 +197,49 @@ const closeShopOnScroll = () => {
   shopContainerEl.classList.add("shop-container");
 };
 
+//Se crea un producto por individual para el carrito, para que luego se rendericen todos:
+
+const createShopProduct = (product) => {
+  const { id, name, price, productImg, quantity } = product;
+  return `
+  <div class="shopcard-container">
+    <div class="shopcard-principal">
+       <h5>${name}</h5>
+       <img src=${productImg} alt=${name}/>
+    </div>
+    <div class="shopcard-total">
+        <div class="shopcard-price">
+          <p class="p-price">Price:</p>
+          <p>${price}</p>
+        </div>
+        <div class="shopcard-quantity">
+          <span class="quantity-handler down" data-id=${id}>-</span>
+          <span class="item-quantity">${quantity}</span>
+          <span class="quantity-handler up" data-id=${id}>+</span>
+        </div>
+    </div>
+  </div> `;
+};
+
+//Si no hay productos en el carrito, debe decir que "está vacío":
+
+const renderShop = () => {
+  //capturo el lugar adonde quiero mostrar el carrito
+  if (!productLS.length) {
+    shopAddEl.innerHTML = `<p class="empty-cart">The cart is empty</p>`;
+    return;
+  }
+  shopAddEl.innerHTML = cart.map(createShopProduct).join("");
+};
+
+//Tener el total de lo agregado al carrito:
+
+const shopTotal = () => {};
+
+//Ver el total de lo agregado al carrito:
+
+const showTotal = () => {};
+
 const init = () => {
   hamburguerMenu();
   aboutButtonEl.addEventListener("click", hiddenButtonAboutAndShowText);
@@ -201,6 +247,8 @@ const init = () => {
   initContact();
   shopEl.addEventListener("click", toggleCart);
   window.addEventListener("scroll", closeShopOnScroll);
+  document.addEventListener("DOMContentLoaded", renderShop);
+  document.addEventListener("DOMContentLoaded", showTotal);
 };
 
 init();
