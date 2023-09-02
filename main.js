@@ -10,12 +10,12 @@ const shopEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
 const shopContainerEl = document.querySelector(".shop-container"); //container del carrito de compras
 const shopAddEl = document.querySelector(".shop-add"); //contenedor de los productos que agrego al carrito
 const totalEl = document.querySelector(".total"); // acá capturo el total de lo que suma los precios del carrito
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //LOCALSTORAGE
 
 //Traigo los mensajes del localStorage o creo array vacío si no hay mensajes:
 
-const productLS = JSON.parse(localStorage.getItem("products")) || [];
+let productLS = JSON.parse(localStorage.getItem("products")) || [];
 
 //Guardo los mensajes en localStorage:
 
@@ -85,7 +85,7 @@ const createProduct = (product) => {
       <p>Price:</p>
       <p>${price}</p>
     </div>
-    <button
+    <button class="button-add"
      data-id= '${id}'
      data-name= '${name}'
      data-price= '${price}'
@@ -199,8 +199,9 @@ const closeShopOnScroll = () => {
 
 //Se crea un producto por individual para el carrito, para que luego se rendericen todos:
 
-const createShopProduct = (product) => {
-  const { id, name, price, productImg, quantity } = product;
+const createShopProduct = (shopProduct) => {
+  const { id, name, price, productImg, quantity } = shopProduct;
+  console.log(productImg);
   return `
   <div class="shopcard-container">
     <div class="shopcard-principal">
@@ -224,21 +225,83 @@ const createShopProduct = (product) => {
 //Si no hay productos en el carrito, debe decir que "está vacío":
 
 const renderShop = () => {
-  //capturo el lugar adonde quiero mostrar el carrito
   if (!productLS.length) {
     shopAddEl.innerHTML = `<p class="empty-cart">The cart is empty</p>`;
     return;
   }
-  shopAddEl.innerHTML = cart.map(createShopProduct).join("");
+  shopAddEl.innerHTML = productLS.map(createShopProduct).join("");
 };
 
 //Tener el total de lo agregado al carrito:
 
-const shopTotal = () => {};
+const shopTotal = () => {
+  totalEl.innerHTML = `$ ${showTotal()}`;
+};
 
 //Ver el total de lo agregado al carrito:
 
-const showTotal = () => {};
+const showTotal = () => {
+  return productLS.reduce(
+    (acc, cur) => acc + Number(cur.price) * cur.quantity,
+    0
+  );
+};
+
+//Desestructuro el producto del carrito:
+
+const destructureProduct = (product) => {
+  const { id, name, price, productImg } = product;
+  return { id, name, price, productImg };
+};
+
+//Saber si ya está el producto agregado al carrito:
+
+const existShopProduct = (product) => {
+  return productLS.find((item) => item.id === product.id);
+};
+
+//Agego una unidad más al producto ya agregado al carrito:
+
+const addExistShopProduct = (product) => {
+  productLS = productLS.map((shopProduct) =>
+    shopProduct.id === product.id
+      ? { ...shopProduct, quantity: shopProduct.quantity + 1 }
+      : shopProduct
+  );
+};
+
+//Creo un objeto con la información del producto a agregar:
+
+const createShopObjectProduct = (product) => {
+  productLS = [...productLS, { ...product, quantity: 1 }];
+};
+
+//Actualizo el carrito:
+
+const updateShopState = () => {
+  saveProductsToLocalStorage();
+  renderShop();
+  shopTotal();
+};
+
+//Agregar al carrito:
+
+const addProduct = (e) => {
+  if (!e.target.classList.contains("button-add")) {
+    return;
+  }
+
+  const product = destructureProduct(e.target.dataset);
+
+  if (existShopProduct(product)) {
+    addExistShopProduct(product);
+    alert("Product added successfully!");
+  } else {
+    createShopObjectProduct(product);
+    alert("Product added successfully!");
+  }
+  updateShopState();
+};
 
 const init = () => {
   hamburguerMenu();
@@ -249,6 +312,7 @@ const init = () => {
   window.addEventListener("scroll", closeShopOnScroll);
   document.addEventListener("DOMContentLoaded", renderShop);
   document.addEventListener("DOMContentLoaded", showTotal);
+  productsContainerEl.addEventListener("click", addProduct);
 };
 
 init();
