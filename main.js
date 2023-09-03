@@ -10,6 +10,8 @@ const shopEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
 const shopContainerEl = document.querySelector(".shop-container"); //container del carrito de compras
 const shopAddEl = document.querySelector(".shop-add"); //contenedor de los productos que agrego al carrito
 const totalEl = document.querySelector(".total"); // acá capturo el total de lo que suma los precios del carrito
+const buyEl = document.querySelector(".buy"); //botón comprar
+const deleteEl = document.querySelector(".delete"); //botón para vaciar carrito
 
 //LOCALSTORAGE
 
@@ -200,13 +202,13 @@ const closeShopOnScroll = () => {
 //Se crea un producto por individual para el carrito, para que luego se rendericen todos:
 
 const createShopProduct = (product) => {
-  const { id, name, price, productImg, quantity } = product;
+  const { id, name, price, img, quantity } = product;
   console.log(product);
   return `
   <div class="shopcard-container">
     <div class="shopcard-principal">
        <h5>${name}</h5>
-       <img src="${productImg}" alt=${name}/>
+       <img src=${img} alt=${name}/>
     </div>
     <div class="shopcard-total">
         <div class="shopcard-price">
