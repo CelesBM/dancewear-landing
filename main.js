@@ -199,14 +199,14 @@ const closeShopOnScroll = () => {
 
 //Se crea un producto por individual para el carrito, para que luego se rendericen todos:
 
-const createShopProduct = (shopProduct) => {
-  const { id, name, price, img, quantity } = shopProduct;
-  console.log(shopProduct);
+const createShopProduct = (product) => {
+  const { id, name, price, productImg, quantity } = product;
+  console.log(product);
   return `
   <div class="shopcard-container">
     <div class="shopcard-principal">
        <h5>${name}</h5>
-       <img src="${img}" alt=${name}/>
+       <img src="${productImg}" alt=${name}/>
     </div>
     <div class="shopcard-total">
         <div class="shopcard-price">
@@ -250,8 +250,8 @@ const showTotal = () => {
 //Desestructuro el producto del carrito:
 
 const destructureProduct = (product) => {
-  const { id, name, price, productImg } = product;
-  return { id, name, price, productImg };
+  const { id, name, price, img } = product;
+  return { id, name, price, img };
 };
 
 //Saber si ya está el producto agregado al carrito:
