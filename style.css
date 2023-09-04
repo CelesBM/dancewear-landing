@@ -41,19 +41,50 @@ header {
   border-bottom: solid 2px #ffd0ef;
 }
 
+@media (min-width: 768px) {
+  header {
+    padding: 8px 40px;
+  }
+}
+
+@media (min-width: 1050px) {
+  header {
+    padding: 8px 70px;
+  }
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.navbar button {
+/*.navbar button*/
+.shop-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 2rem;
   border: none;
   background-color: #ffff;
   color: #aaaaaa;
   cursor: pointer;
   transition: color 0.3s ease;
+}
+
+@media (min-width: 1050px) {
+  .shop-button {
+    font-size: 45px;
+  }
+}
+
+.shop-quantity {
+  font-size: 10px;
+  font-weight: bold;
+  color: #5f5c5c;
+  background-color: #ffd0ef;
+  padding: 4px;
+  border-radius: 1rem;
 }
 
 .navbar button:hover {
@@ -218,12 +249,18 @@ header {
 }
 
 .shop-total {
+  background-color: #ffe4f6;
+  margin: 20px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 10px;
+  border: solid #817a7f 1px;
+  border-radius: 5px;
+  padding: 10px;
 }
 
-.shop-container button {
+/*.shop-container button {
   padding: 5px 40px;
   background-color: #ffe4f6;
   color: #817a7f;
@@ -233,21 +270,38 @@ header {
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-}
+}*/
 
-.shop-container button:hover {
+/*.shop-container button:hover {
   box-shadow: 0px 0px 8px 2px #aaaaaa;
   font-weight: bold;
-}
+}*/
 
 .shopcard-container {
   display: flex;
   background-color: #fff9fd;
   border-radius: 1rem;
   box-shadow: 0px 0px 12px 1px #aaaaaa;
-  padding: 10px 50px;
-  gap: 40px;
+  gap: 15px;
+  padding: 10px 20px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+@media (min-width: 768px) {
+  .shopcard-container {
+    gap: 60px;
+    padding: 20px 50px;
+  }
+}
+
+@media (min-width: 1050px) {
+  .shopcard-container {
+    gap: 100px;
+    padding: 20px 100px;
+  }
 }
 
 .shopcard-total {
@@ -276,16 +330,31 @@ header {
   width: 80px;
 }
 
+@media (min-width: 768px) {
+  .shopcard-container img {
+    height: 125px;
+    width: 90px;
+  }
+}
+
 .shopcard-price {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  gap: 10px;
+  gap: 5px;
 }
 
 .p-price {
   font-weight: bold;
+}
+
+.quantity-handler {
+  font-size: 18px;
+  background-color: #e4e4e4;
+  padding: 0px 8px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 .empty-cart {
@@ -298,21 +367,32 @@ header {
   font-size: 16px;
 }
 
-.buy {
-  padding: 5px 40px;
+.buy,
+.delete {
+  padding: 10px 40px;
   background-color: #ffe4f6;
   color: #817a7f;
-  border: none;
+  border: solid #817a7f 1px;
   border-radius: 1rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.buy:hover {
+.buy:hover,
+.delete:hover {
   box-shadow: 0px 0px 8px 2px #aaaaaa;
   font-weight: bold;
+  color: #5f5c5c;
+}
+
+.disabled {
+  background-color: #b8b8b8;
+  color: white;
+  cursor: not-allowed;
+  border: none;
 }
 
 /* HERO */
@@ -444,6 +524,8 @@ header {
 
 #products {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   border-bottom: solid 1px #ffd0ef;
 }

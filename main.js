@@ -12,6 +12,7 @@ const shopAddEl = document.querySelector(".shop-add"); //contenedor de los produ
 const totalEl = document.querySelector(".total"); // acá capturo el total de lo que suma los precios del carrito
 const buyEl = document.querySelector(".buy"); //botón comprar
 const deleteEl = document.querySelector(".delete"); //botón para vaciar carrito
+const shopQuantityEl = document.querySelector(".shop-quantity"); //cantidad de unidades añadidas al carrito
 
 //LOCALSTORAGE
 
@@ -213,7 +214,7 @@ const createShopProduct = (product) => {
     <div class="shopcard-total">
         <div class="shopcard-price">
           <p class="p-price">Price:</p>
-          <p>${price}</p>
+          <p>$ ${price}</p>
         </div>
         <div class="shopcard-quantity">
           <span class="quantity-handler down" data-id=${id}>-</span>
@@ -278,12 +279,81 @@ const createShopObjectProduct = (product) => {
   productLS = [...productLS, { ...product, quantity: 1 }];
 };
 
+//Habilitar o deshabilitar la opcion de "buy" o "empty cart":
+
+const shopButton = (button) => {
+  if (!productLS.length) {
+    button.classList.add("disabled");
+  } else {
+    button.classList.remove("disabled");
+  }
+};
+
+//Sumar unidades al logo del carrito:
+
+const shopQuantity = () => {
+  shopQuantityEl.textContent = productLS.reduce((acc, cur) => {
+    return acc + cur.quantity;
+  }, 0);
+};
+
+//Eliminar un producto del carrito:
+
+const removeShopProduct = (existingProduct) => {
+  productLS = productLS.filter((product) => product.id !== existingProduct.id);
+  updateShopState();
+};
+
+//Restar una unidad al producto del carrito:
+
+const decreaseShopProduct = (existingProduct) => {
+  productLS = productLS.map((product) => {
+    return product.id === existingProduct.id
+      ? { ...product, quantity: Number(product.quantity) - 1 }
+      : product;
+  });
+};
+
+//Disminuir una unidad del producto dentro del carrito:
+const handleQuantitydecrease = (id) => {
+  const existingProduct = productLS.find((item) => item.id === id);
+
+  // Si se toco en un item con uno solo de cantidad
+  if (existingProduct.quantity === 1) {
+    removeShopProduct(existingProduct);
+
+    return;
+  }
+  decreaseShopProduct(existingProduct);
+};
+
+//Aumentar una unidad del producto dentro del carrito:
+const handleQuantityincrease = (id) => {
+  const existingProduct = productLS.find((item) => item.id === id);
+  addExistShopProduct(existingProduct);
+};
+
+//Manejar cantidades de productos dentro del carrito
+const handleQuantity = (e) => {
+  if (e.target.classList.contains("down")) {
+    handleQuantitydecrease(e.target.dataset.id);
+  } else if (e.target.classList.contains("up")) {
+    handleQuantityincrease(e.target.dataset.id);
+  }
+  //Para todos los casos
+  updateShopState();
+};
+
 //Actualizo el carrito:
 
 const updateShopState = () => {
   saveProductsToLocalStorage();
   renderShop();
   shopTotal();
+  shopButton(buyEl);
+  shopButton(deleteEl);
+  //Sumar unidades al logo del carrito:
+  shopQuantity();
 };
 
 //Agregar al carrito:
@@ -305,6 +375,31 @@ const addProduct = (e) => {
   updateShopState();
 };
 
+//Compra satisfactoria
+
+const successBuy = () => {
+  if (!productLS.length) return;
+  if (productLS.length) {
+    alert("Your order was successfully completed!");
+  }
+};
+
+//Eliminar el carrito:
+const resetShop = () => {
+  productLS = [];
+  updateShopState;
+};
+
+//Vaciar el carrito:
+
+const deleteShop = () => {
+  if (!productLS.length) return;
+  if (productLS.length) {
+    resetShop();
+    alert("Your cart has been emptied.");
+  }
+};
+
 const init = () => {
   hamburguerMenu();
   aboutButtonEl.addEventListener("click", hiddenButtonAboutAndShowText);
@@ -314,7 +409,13 @@ const init = () => {
   window.addEventListener("scroll", closeShopOnScroll);
   document.addEventListener("DOMContentLoaded", renderShop);
   document.addEventListener("DOMContentLoaded", showTotal);
+  shopButton(buyEl);
+  shopButton(deleteEl);
+  shopQuantity(productLS);
   productsContainerEl.addEventListener("click", addProduct);
+  shopContainerEl.addEventListener("click", handleQuantity);
+  buyEl.addEventListener("click", successBuy);
+  deleteEl.addEventListener("click", deleteShop);
 };
 
 init();
