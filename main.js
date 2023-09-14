@@ -14,19 +14,15 @@ const buyEl = document.querySelector(".buy"); //botón comprar
 const deleteEl = document.querySelector(".delete"); //botón para vaciar carrito
 const shopQuantityEl = document.querySelector(".shop-quantity"); //cantidad de unidades añadidas al carrito
 
-//LOCALSTORAGE
-
-//Traigo los mensajes del localStorage o creo array vacío si no hay mensajes:
+//Traigo los productos del localStorage o creo array vacío si no hay productos:
 
 let productLS = JSON.parse(localStorage.getItem("products")) || [];
 
-//Guardo los mensajes en localStorage:
+//Guardo los productos en localStorage:
 
 const saveProductsToLocalStorage = () => {
   localStorage.setItem("products", JSON.stringify(productLS));
 };
-
-//         FUNCIONES AUXILIARES DEL MENU HAMBURGUESA: SHOWMENU, CLOSENAVONSCROLL Y CLOSENAVBARMOBILE          //
 
 //Para desplegar la navbar en la versión mobile:
 
@@ -55,15 +51,13 @@ const closeNavbarMobile = () => {
   }
 };
 
-//         FUNCION PRINCIPAL DEL MENU HAMBURGUESA: HAMBURGUERMENU (SE EJECUTA EN EL INIT)          //
+//Función principal del menú hamburguesa:
 
 const hamburguerMenu = () => {
   toggleEl.addEventListener("click", showMenu);
   window.addEventListener("scroll", closeNavOnScroll);
   window.addEventListener("resize", closeNavbarMobile);
 };
-
-//         FUNCIONES RELACIONADAS A LA SECCION ABOUT US          //
 
 //Para que con about us al hacer click desaparezca el botón:
 
@@ -73,8 +67,6 @@ const hiddenButtonAboutAndShowText = () => {
   We are a leading company in the manufacture of clothing for ballet dancers for more than 20 years. We focus on the comfort and quality of our garments, so that you can give your best version both in classes and on stage.</p> `;
   aboutContainerEl.classList.toggle("about-p");
 };
-
-//         FUNCIONES AUXILIARES DE LA SECCION PRODUCTS          //
 
 //Se crea un producto por individual, para que luego se rendericen todos:
 
@@ -107,6 +99,8 @@ const isLastIndexOf = () => {
   return state.index === state.limit - 1;
 };
 
+//Ver más productos al tocar "see more":
+
 const showMoreProducts = () => {
   state.index += 1;
   let { products, index } = state;
@@ -123,7 +117,8 @@ const noFiltrerButton = (button) => {
   );
 };
 
-//función para cambiar el estado de los botones de categorías
+//Cambiar el estado de los botones de categorías:
+
 const changeButtonState = (chosenCategory) => {
   const categories = [...categoriesList];
   categories.forEach((categoryButton) => {
@@ -135,7 +130,8 @@ const changeButtonState = (chosenCategory) => {
   });
 };
 
-//función para mostrar u ocultar el botón de "ver más" según corresponsa
+//Mostrar u ocultar botón "see more":
+
 const seeMoreOptions = () => {
   if (!state.activeFilter) {
     buttonSeeMoreEl.classList.remove("display-none");
@@ -144,13 +140,16 @@ const seeMoreOptions = () => {
   buttonSeeMoreEl.classList.add("display-none");
 };
 
+//Activar un botón al tocar la categoría:
+
 const changeFilterState = (button) => {
   state.activeFilter = button.dataset.category;
   changeButtonState(state.activeFilter);
   seeMoreOptions();
 };
 
-//renderizar los productos filtrados
+//Renderizar los productos filtrados:
+
 const renderProductsFiltered = () => {
   const filteredProducts = productsInfo.filter(
     (product) => product.category === state.activeFilter
@@ -158,10 +157,11 @@ const renderProductsFiltered = () => {
   renderProducts(filteredProducts);
 };
 
+//Filtrar por categorías:
+
 const filterByCategories = ({ target }) => {
   if (!noFiltrerButton(target)) return;
   changeFilterState(target);
-  //si vamos a mostrar cosas filtradas tengo que limpiar el div
   productsContainerEl.innerHTML = "";
   if (state.activeFilter) {
     renderProductsFiltered();
@@ -171,16 +171,17 @@ const filterByCategories = ({ target }) => {
   renderProducts(state.products[0]);
 };
 
+//Función init de los productos:
+
 const initProducts = () => {
   renderProducts(state.products[0]);
   buttonSeeMoreEl.addEventListener("click", showMoreProducts);
   buttonsContainerEl.addEventListener("click", filterByCategories);
 };
-/////////////////////////////////////////////////////////////////////////////
+
+//Para abrir carrito y cerrar navbar:
 
 const toggleCart = () => {
-  //cuando haga click en el carrito abra el menú del carrito y cierro la navbar
-  //shopContainerEl.classList.remove("shopcart-container");
   shopContainerEl.classList.toggle("show-shop");
   navListEl.classList.remove("show-navbar"); //con esto cuando toco el carrito se cierra el navbar
   if (shopContainerEl.classList.contains("show-shop")) {
@@ -315,9 +316,9 @@ const decreaseShopProduct = (existingProduct) => {
 };
 
 //Disminuir una unidad del producto dentro del carrito:
+
 const handleQuantitydecrease = (id) => {
   const existingProduct = productLS.find((item) => item.id === id);
-
   // Si se toco en un item con uno solo de cantidad
   if (existingProduct.quantity === 1) {
     removeShopProduct(existingProduct);
@@ -328,19 +329,20 @@ const handleQuantitydecrease = (id) => {
 };
 
 //Aumentar una unidad del producto dentro del carrito:
+
 const handleQuantityincrease = (id) => {
   const existingProduct = productLS.find((item) => item.id === id);
   addExistShopProduct(existingProduct);
 };
 
-//Manejar cantidades de productos dentro del carrito
+//Manejar cantidades de productos dentro del carrito:
+
 const handleQuantity = (e) => {
   if (e.target.classList.contains("down")) {
     handleQuantitydecrease(e.target.dataset.id);
   } else if (e.target.classList.contains("up")) {
     handleQuantityincrease(e.target.dataset.id);
   }
-  //Para todos los casos
   updateShopState();
 };
 
@@ -352,7 +354,6 @@ const updateShopState = () => {
   shopTotal();
   shopButton(buyEl);
   shopButton(deleteEl);
-  //Sumar unidades al logo del carrito:
   shopQuantity();
 };
 
@@ -375,7 +376,7 @@ const addProduct = (e) => {
   updateShopState();
 };
 
-//Compra satisfactoria
+//Compra satisfactoria:
 
 const successBuy = () => {
   if (!productLS.length) return;
@@ -385,6 +386,7 @@ const successBuy = () => {
 };
 
 //Eliminar el carrito:
+
 const resetShop = () => {
   productLS = [];
   updateShopState;
@@ -399,6 +401,8 @@ const deleteShop = () => {
     alert("Your cart has been emptied.");
   }
 };
+
+//FUNCION PRINCIPAL
 
 const init = () => {
   hamburguerMenu();

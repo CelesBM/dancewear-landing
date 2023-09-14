@@ -27,9 +27,7 @@ html {
     transform: translateY(0);
   }
   to {
-    transform: translateY(
-      80px
-    ); /* Puedes ajustar la cantidad de desplazamiento aquí */
+    transform: translateY(80px);
   }
 }
 
@@ -60,6 +58,7 @@ header {
 }
 
 /*.navbar button*/
+
 .shop-button {
   display: flex;
   justify-content: center;
@@ -137,6 +136,7 @@ header {
 }
 
 /*Desaparece el menú hamburguesa*/
+
 @media (min-width: 768px) {
   .navbar__toggle {
     display: none;
@@ -151,6 +151,7 @@ header {
 }
 
 /*No se debe ver hasta que no se haga click en el menú hamburguesa*/
+
 .navbar__list {
   display: none;
 }
@@ -165,6 +166,7 @@ header {
 }
 
 /*Al hacer click en el menú hamburguesa, despliega el la navbar__list*/
+
 .show-navbar {
   list-style: none;
   text-align: center;
@@ -259,23 +261,6 @@ header {
   border-radius: 5px;
   padding: 10px;
 }
-
-/*.shop-container button {
-  padding: 5px 40px;
-  background-color: #ffe4f6;
-  color: #817a7f;
-  border: none;
-  border-radius: 1rem;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-}*/
-
-/*.shop-container button:hover {
-  box-shadow: 0px 0px 8px 2px #aaaaaa;
-  font-weight: bold;
-}*/
 
 .shopcard-container {
   display: flex;
@@ -458,6 +443,8 @@ header {
   }
 }
 
+/* ABOUT */
+
 #about {
   background-image: url("https://64.media.tumblr.com/662120cffbd5c1d142b9e78d8abec3f0/74aa9c7f5549b27e-a2/s1280x1920/c33d1a7df1df8200c3088e41ce0ab9e248dbeaff.jpg");
   background-size: cover;
@@ -497,7 +484,6 @@ header {
   animation-direction: alternate;
 }
 
-/*prueba para innerhtml*/
 .about-p {
   color: #ffff;
   background-color: rgba(0, 0, 0, 0.5);
@@ -766,6 +752,8 @@ header {
   border: 3px solid #27ce4e;
   border-radius: 6px;
 }
+
+/* FOOTER */
 
 .container-footer {
   padding: 30px 20px;
