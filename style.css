@@ -394,42 +394,57 @@ header {
   background-color: #fff9fd;
   border-bottom: solid 1px #ffd0ef;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 20px;
-  gap: 20px;
+  gap: 30px;
   animation-duration: 2s;
   animation-name: fade;
   animation-iteration-count: 1;
-  animation-direction: alternate;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
   #hero {
-    flex-direction: row;
-    gap: 100px;
-    padding: 20px 50px;
+    gap: 50px;
   }
 }
 
 .hero__info {
-  display: flex;
-  flex-direction: column;
+  max-width: 300px;
   margin-top: 10px;
-  gap: 15px;
 }
 
 @media (min-width: 768px) {
   .hero__info {
-    gap: 50px;
-    width: 50%;
+    max-width: 220px;
   }
+}
+
+@media (min-width: 1050px) {
+  .hero__info {
+    max-width: 230px;
+  }
+}
+
+@media (min-width: 1285px) {
+  .hero__info {
+    max-width: 250px;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
 }
 
 .hero__info h3 {
   font-size: 20px;
   text-align: center;
   text-decoration: underline #ffd0ef;
+  margin-bottom: 5px;
 }
 
 .hero__info p {
@@ -439,24 +454,13 @@ header {
   text-align: center;
 }
 
-#hero img {
-  margin-top: 5px;
-  width: 370px;
-  height: 520px;
-  border-radius: 5px;
-}
-
-@media (max-width: 400px) {
-  #hero img {
-    width: 300px;
-    height: 390px;
+@media (max-width: 768px) {
+  #hero {
+    flex-direction: column;
   }
-}
 
-@media (min-width: 768px) {
-  #hero img {
-    width: 480px;
-    height: 630px;
+  .hero__info {
+    text-align: center;
   }
 }
 
