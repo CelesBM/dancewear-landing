@@ -8,6 +8,7 @@ const buttonsContainerEl = document.querySelector(".container-buttons"); //conte
 const categoriesList = document.querySelectorAll(".category"); //categoría de producto
 const shopEl = document.querySelector(".fa-shopping-cart"); //carrito de compras
 const shopContainerEl = document.querySelector(".shop-container"); //container del carrito de compras
+console.log(shopContainerEl);
 const shopAddEl = document.querySelector(".shop-add"); //contenedor de los productos que agrego al carrito
 const totalEl = document.querySelector(".total"); // acá capturo el total de lo que suma los precios del carrito
 const buyEl = document.querySelector(".buy"); //botón comprar
@@ -194,11 +195,33 @@ const toggleCart = () => {
 //Cerrar el carrito de compras al hacer scroll:
 
 const closeShopOnScroll = () => {
+  //así estaba antes:
+  //if (!shopContainerEl.classList.contains("show-shop")) {
+  //  return;
+  //}
+  //shopContainerEl.classList.remove("show-shop");
+  //shopContainerEl.classList.add("shop-container");
+
+  //probando arreglar el error:
   if (!shopContainerEl.classList.contains("show-shop")) {
     return;
   }
-  shopContainerEl.classList.remove("show-shop");
-  shopContainerEl.classList.add("shop-container");
+  // Agregar un manejador de eventos para evitar el cierre cuando el mouse está sobre el elemento
+  shopContainerEl.addEventListener("mouseenter", () => {
+    // No hagas nada cuando el mouse entra en el elemento
+  });
+
+  shopContainerEl.addEventListener("mouseleave", () => {
+    // Cuando el mouse sale del elemento, cierra el contenedor
+    shopContainerEl.classList.remove("show-shop");
+    shopContainerEl.classList.add("shop-container");
+  });
+};
+
+//PROBANDO ERROR DEL TP
+
+const noCloseOnScroll = () => {
+  shopContainerEl.classList.add("show-shop");
 };
 
 //Se crea un producto por individual para el carrito, para que luego se rendericen todos:
